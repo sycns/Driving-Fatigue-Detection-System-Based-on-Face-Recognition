@@ -1,17 +1,26 @@
 #include <opencv2/opencv.hpp>
+#include <iostream>
 
 using namespace cv;
+using namespace std;
 
-int main()
+int main(int argc,char** argv)
 {
-	//读取图片（使用图片的绝对路径）
-	Mat src = imread("01.jpg");
-	//显示图片
-	imshow("Output", src);
-	//显示灰度图
-	Mat Gray;
-	cvtColor(src, Gray, 6);
-	imshow("Gray", Gray);
+	namedWindow("Example_capture", WINDOW_AUTOSIZE);
+
+	VideoCapture cap;
+
+	if (argc == 1) {
+		cap.open(0);
+	}
+	else {
+		cap.open(argv[1]);
+	}
+
+	if (!cap.isOpened()) {
+		cerr << "Couldn't open capture." << endl;
+		return -1;
+	}
 
 	//不加此语句图片会一闪而过
 	waitKey(0);
